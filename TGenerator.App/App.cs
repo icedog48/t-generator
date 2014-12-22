@@ -13,31 +13,36 @@ namespace TGenerator.App
 {
     public class App
     {
-        private const string TEMPLATES_PATH = "Templates";
-
-        private string _NamespaceFileName;
-
-        private string _GeneratedOutputPath;
-
         private TemplateProcessor _Processor;
 
-        public App(string filename, string generatedOutputPath)
-        {
-            this._NamespaceFileName = filename;
-            this._GeneratedOutputPath = generatedOutputPath;
+        public string TemplatePath { get; set; }
 
+        public string SettingsPath { get; set; }
+
+        public string OutputPath { get; set; }        
+
+        public App()
+        {
             this._Processor = TemplateProcessorFactory.DefaultFactory().CreateTemplateProcessor();
         }
 
         public void Execute() 
         {
-            var entities = JsonConvert.DeserializeObject<Entity[]>(File.ReadAllText(this._NamespaceFileName));
+            var entities = JsonConvert.DeserializeObject<Entity[]>(File.ReadAllText(this.SettingsPath));
 
-            var templates = Directory.EnumerateFiles(TEMPLATES_PATH,"*.tt", SearchOption.AllDirectories);
+            var allTemplates = Directory.EnumerateFiles(TemplatePath, "*.tt", SearchOption.AllDirectories);
 
-            foreach (var template in templates)
-                foreach (var entity in entities)
-                    ProcessTemplate(template, entity);
+            var singleEntityTemplates = from template in allTemplates
+                                        where template.Contains(TGeneratorTextTransformation.ENTITY_FILENAME)
+                                        select template;
+
+            singleEntityTemplates.ToList().ForEach(template => entities.ToList().ForEach(entity => ProcessTemplate(template, entity)));
+
+            var multipleEntityTemplates = from template in allTemplates
+                                          where !template.Contains(TGeneratorTextTransformation.ENTITY_FILENAME)
+                                          select template;
+
+            multipleEntityTemplates.ToList().ForEach(template => ProcessTemplate(template, entities));
         }
 
         private void ProcessTemplate(string template, Entity entity)
@@ -47,19 +52,44 @@ namespace TGenerator.App
                 { TGeneratorTextTransformation.ENTITY_PARAMETER, entity }
             });
 
-            var outputFilename = GetGeneratedFilename(entity, template);
+            var outputFilename = GetOutputFilename(template, entity);
 
             if (!Directory.Exists(Path.GetDirectoryName(outputFilename))) Directory.CreateDirectory(Path.GetDirectoryName(outputFilename));
 
             File.WriteAllText(outputFilename, processedString);
         }
 
-        private string GetGeneratedFilename(Entity entity, string templateFilename)
+        private void ProcessTemplate(string template, Entity[] entities)
+        {
+            var processedString = _Processor.ProcessTemplate(template, new Dictionary<string, object> 
+            {  
+                { TGeneratorTextTransformation.ENTITIES_PARAMETER, entities }
+            });
+
+            var outputFilename = GetOutputFilename(template);
+
+            if (!Directory.Exists(Path.GetDirectoryName(outputFilename))) Directory.CreateDirectory(Path.GetDirectoryName(outputFilename));
+
+            File.WriteAllText(outputFilename, processedString);
+        }
+
+        private string GetOutputFilename(string templateFilename)
         {
             var templateName = Path.GetFileNameWithoutExtension(templateFilename);
             var templateDirectory = Path.GetDirectoryName(templateFilename);
 
-            var outputPath = this._GeneratedOutputPath + templateDirectory.Replace(TEMPLATES_PATH, string.Empty);
+            var outputPath = this.OutputPath + templateDirectory.Replace(TemplatePath, string.Empty);
+            var outputFilename = templateName + _Processor.FileExtension;
+
+            return Path.Combine(outputPath, outputFilename);
+        }
+
+        private string GetOutputFilename(string templateFilename, Entity entity)
+        {
+            var templateName = Path.GetFileNameWithoutExtension(templateFilename);
+            var templateDirectory = Path.GetDirectoryName(templateFilename);
+
+            var outputPath = this.OutputPath + templateDirectory.Replace(TemplatePath, string.Empty);
             var outputFilename = templateName.Replace(TGeneratorTextTransformation.ENTITY_FILENAME, entity.Name) + _Processor.FileExtension;
 
             return Path.Combine(outputPath, outputFilename);

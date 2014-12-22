@@ -13,12 +13,21 @@ namespace TGenerator.TextTransformation
     {
         public const string ENTITY_FILENAME = "_ENTITY_";
         public const string ENTITY_PARAMETER = "entity";
+        public const string ENTITIES_PARAMETER = "entities";
 
         public Entity Entity 
         {
             get 
             {
                 return (Entity)this.ProcessorSession[ENTITY_PARAMETER];
+            }
+        }
+
+        public Entity Entities
+        {
+            get
+            {
+                return (Entity)this.ProcessorSession[ENTITIES_PARAMETER];
             }
         } 
     }

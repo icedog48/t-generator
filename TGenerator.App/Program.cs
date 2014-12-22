@@ -18,7 +18,12 @@ namespace TGenerator.App
     {
         static void Main(string[] args)
         {
-            var program = new App(args[0], args[1]);
+            var program = new App();
+
+            program.SettingsPath = args[0];
+            program.TemplatePath = args[1];
+            program.OutputPath = args[2];
+
             program.Execute();
         }        
     }

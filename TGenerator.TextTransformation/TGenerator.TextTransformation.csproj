@@ -59,7 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Mapping\_ENTITY_Mapping.tt">
+    <EmbeddedResource Include="Templates\Model.Mapping\_ENTITY_Mapping.tt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\Model\_ENTITY_.tt">
@@ -79,6 +79,14 @@
       <Project>{c5fd8d9f-d9d6-4b83-a297-9cfb451cd314}</Project>
       <Name>TGenerator.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Templates\Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Migrations\Migration.tt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
