@@ -1,0 +1,78 @@
+<#@ template language="C#" hostSpecific="true" inherits="TGeneratorTextTransformation"  #>
+<#@ output extension=".cs" #>
+<#@ assembly    name="T4Processor.dll" #>
+<#@ import namespace="T4Processor" #>
+<#@ assembly    name="TGenerator.App.exe" #>
+<#@ import namespace="TGenerator.App" #>
+<#@ assembly    name="TGenerator.Model.dll" #>
+<#@ import namespace="TGenerator.Model" #>
+<#@ assembly    name="TGenerator.TextTransformation.dll" #>
+<#@ import namespace="TGenerator.TextTransformation" #>
+using NHibernate.Mapping.ByCode;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Mapping
+{
+    public class <#= Entity.Name #>Mapping : ClassMapping<<#= Entity.Name #>>
+    {
+		public <#= Entity.Name #>Mapping()
+		{
+<#
+	foreach(PrimaryKey property in Entity.PrimaryKeys)
+	{
+		string mapper = (property.IsAutoIncremment) ? ", mapper => mapper.Generator(Generators.Native)" : string.Empty;
+#>
+			Id(x => x.<#= property.ColumnName #><#= mapper #>);
+
+<#
+	}
+#>
+<#
+	foreach(Property property in Entity.Columns)
+	{
+#>
+			Property(x => x.<#= property.Name #>);
+
+<#
+	}
+#>
+<#
+	foreach(ForeignKey foreignKey in Entity.ForeignKeys)
+	{
+		Property property = Entity.GetPropertyBy(foreignKey);
+
+		if(property != null && property.TypeOf == TypeOf.OBJECT)
+		{
+#>
+			ManyToOne(x => x.<#= foreignKey.PropertyName #>,
+                mapping =>
+                {
+                    mapping.Column("<#= foreignKey.ColumnName #>");
+                    mapping.Cascade(Cascade.None);
+                    mapping.Lazy(LazyRelation.NoLazy);
+                });
+
+<#
+		}
+		else
+		{
+#>
+			Bag(x => x.<#= foreignKey.PropertyName #>, bag =>
+            {
+                bag.Inverse(true);
+                bag.Table("<#= foreignKey.TableReference #>");
+                bag.Schema(Model.Map.Schema.Name);
+                bag.Cascade(Cascade.All);
+                bag.Key(key => key.Column("<#= foreignKey.ColumnName #>"));
+            }, map => map.OneToMany());
+<#
+		}
+	}
+#>		
+		}
+    }
+}

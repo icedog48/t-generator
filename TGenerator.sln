@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{7A6475E4-2B61-4807-89E2-50BF1A523559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "T4Processor", "Common\T4Processor\T4Processor.csproj", "{D44709B3-94C4-45C2-9D54-29D1DB7C7856}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils.Extensions", "Common\Utils.Extensions\Utils.Extensions.csproj", "{76814548-C0CC-4CF6-8EF8-5E24A2B94A53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGenerator.Model", "TGenerator.Model\TGenerator.Model.csproj", "{C5FD8D9F-D9D6-4B83-A297-9CFB451CD314}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGenerator.TextTransformation", "TGenerator.TextTransformation\TGenerator.TextTransformation.csproj", "{2492C910-056D-4F99-B4F7-E77546887812}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TGenerator.App", "TGenerator.App\TGenerator.App.csproj", "{3346BCF9-6A3D-427A-A279-E19E4018CE69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D44709B3-94C4-45C2-9D54-29D1DB7C7856}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D44709B3-94C4-45C2-9D54-29D1DB7C7856}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D44709B3-94C4-45C2-9D54-29D1DB7C7856}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D44709B3-94C4-45C2-9D54-29D1DB7C7856}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76814548-C0CC-4CF6-8EF8-5E24A2B94A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76814548-C0CC-4CF6-8EF8-5E24A2B94A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76814548-C0CC-4CF6-8EF8-5E24A2B94A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76814548-C0CC-4CF6-8EF8-5E24A2B94A53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FD8D9F-D9D6-4B83-A297-9CFB451CD314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FD8D9F-D9D6-4B83-A297-9CFB451CD314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FD8D9F-D9D6-4B83-A297-9CFB451CD314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FD8D9F-D9D6-4B83-A297-9CFB451CD314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2492C910-056D-4F99-B4F7-E77546887812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2492C910-056D-4F99-B4F7-E77546887812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2492C910-056D-4F99-B4F7-E77546887812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2492C910-056D-4F99-B4F7-E77546887812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3346BCF9-6A3D-427A-A279-E19E4018CE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3346BCF9-6A3D-427A-A279-E19E4018CE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3346BCF9-6A3D-427A-A279-E19E4018CE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3346BCF9-6A3D-427A-A279-E19E4018CE69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D44709B3-94C4-45C2-9D54-29D1DB7C7856} = {7A6475E4-2B61-4807-89E2-50BF1A523559}
+		{76814548-C0CC-4CF6-8EF8-5E24A2B94A53} = {7A6475E4-2B61-4807-89E2-50BF1A523559}
+	EndGlobalSection
+EndGlobal

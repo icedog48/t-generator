@@ -1,0 +1,32 @@
+<#@ template language="C#" hostSpecific="true" inherits="TGeneratorTextTransformation"  #>
+<#@ output extension=".cs" #>
+<#@ assembly    name="T4Processor.dll" #>
+<#@ import namespace="T4Processor" #>
+<#@ assembly    name="TGenerator.App.exe" #>
+<#@ import namespace="TGenerator.App" #>
+<#@ assembly    name="TGenerator.Model.dll" #>
+<#@ import namespace="TGenerator.Model" #>
+<#@ assembly    name="TGenerator.TextTransformation.dll" #>
+<#@ import namespace="TGenerator.TextTransformation" #>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Model
+{
+    public class <#= Entity.Name #>
+    {
+
+<#
+	foreach(Property property in Entity.Properties)
+	{
+#>
+		public <#= property.Type #> <#= property.Name #> { get; set; }
+
+<#
+	}
+#>
+    }
+}
